@@ -1,0 +1,110 @@
+void check(INT stack[MAX],int CE[MAX])
+{
+	int pop,x,top,dCE;
+	top=1;
+	stack[top]=u ;// thêm đỉnh u vào stack		
+	dCE=0; 
+	do
+	{
+		pop=stack[top]; // lấy đỉnh trên cùng của stack để so các đỉnh kề
+		x=1;
+		while(x<=n && a[pop][x]==0) // tìm đỉnh kề của pop
+			x++;
+		if(x>n) // lấy ra khỏi stack 
+		{
+			dCE++;
+			CE[dCE]=pop; lấy ra đỉnh đã duyệt hết đỉnh kề
+			top--; STACK trừ số vừa lấy ra;
+		}
+		else // đỉnh x là đỉnh kề của pop
+			{
+				top++;
+				stack[top]=x;
+				a[pop][x]=0;
+				a[x][pop]=0;	
+			}
+	}while(top !=0);
+	printf("\nCHU TRINH EULER LA:);
+	for(int i=dCE;i>0;x--)
+		printf(" %d ",CE[i]);
+}
+void DDEULER(){
+ int v, x, top, dCE;
+ int stack[MAX], CE[MAX];
+ top=1; // chỉ số của mảng STACK
+ stack[top]=1;// bắt đầu từ đỉnh 1, đề yêu cầu đỉnh nào thì chỉnh lại 
+ dCE=0; // chỉ số mảng CE
+ do {
+   v = stack[top]; // lấy ra đỉnh cuối của STACK
+   x=1;
+   while (x<=n && A[v][x]==0)// nếu là 1,1 thì duyệt đến 1,2 . nếu không phải thì duyệt từ chỉ số đầu tiên 
+       x++;
+  ---tìm đỉnh x kề với v --
+   //nếu đỉnh x không kề với v -> lấy v ra khỏi stack và đưa vào CE.
+   if (x>n) // nếu đỉnh v hết kề với x thì đưa v ra CE
+	{ 
+    		dCE++; // dCE là chỉ số của mảng CE
+		CE[dCE]=v; // đưa đỉnh v vào mảng CE
+		top--; // giảm chỉ số của mảng STACK 
+	}   
+   else //nếu đỉnh x kề với đỉnh v -> đưa x vào stack và xóa cạnh (v,x).
+	{
+	   top++;
+	   stack[top]=x; // vị trí top = đỉnh X kề với V
+	   A[v][x]=0; // xóa cạnh đã duyệt qua
+           A[x][v]=0; // cạnh vx cũng như cạnh xv nên cũng xóa
+ 	 }
+ } while(top!=0);
+ cout<<" Co duong di Euler:";
+ //In kết quả chứa trong CE theo thứ tự ngược lại.
+ for(x=dCE; x>0; x--)
+  cout<<(char)(CE[x] + 'a' - 1)<<" "; //in ra kết quả dưới dạng char.
+}
+int Kiemtra(){
+
+ int s, d;
+
+ d=0; //biến đếm số đỉnh bật lẻ.
+
+ for(int i=1; i<=n;i++)
+ {
+
+   s=0;
+
+   for(int j=1; j<=n;j++)
+
+   s+=A[i][j];
+
+  if(s%2!=0)
+  {
+
+   d++; //tăng giá trị biến đếm đỉnh bậc lẻ.
+
+   u=i; //Ghi nhớ đỉnh bặc lẻ.
+
+  }
+
+ }
+
+ if(d!=2) return(FALSE); //nếu số đỉnh bậc lẻ khác 2 thì không có đường đi Euler.
+
+ else 
+	return(TRUE);
+
+}
+
+6
+đỉnh bậc lẻ 1 , 3
+
+0 1 1 1 0 0 0
+1 0 1 0 1 1 0
+1 1 0 1 0 0 0
+1 0 1 0 0 1 1
+0 1 0 0 0 1 0
+0 1 0 1 1 0 0
+0 0 0 1 0 1 0
+v=stack[top]=3
+tìm đỉnh kề với 3
+a[3,1]==1 đỉnh 1 kề với 3
+top = 2 stack[2]==1
+a[v,x]=0 a[x,v]=0
